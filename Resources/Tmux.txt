@@ -1,0 +1,27 @@
+Pretty sure I'm going to be using this from now on. Start tmux from terminal.
+
+Sessions-> Windows -> Panels 
+Control-b will initiate a tmux command 
+
+Panel manipulation
+CTRL-b %
+CTRL-b "
+
+Dettach 
+CTRL-b d
+
+Attach 
+tmux ls 
+tmux attach-session NAME
+
+Start a new session
+tmux new -s "session name" 
+
+Move between panels 
+CTRL-b arrow-keys 
+
+Move between windows 
+CTRL-b n/p (next/previous)
+
+Move between sessions
+CTRL-b ( or ) 

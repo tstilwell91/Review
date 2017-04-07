@@ -1,0 +1,10 @@
+Catalog App: I developed a content management system using the Flask framwork in Python. Authentication is provided via OAuth and all data is stored within a PostgreSQL database. 
+Design a Game: I implemented a game as an API with endpoints that allow anyone to develop a front-end for the game. 
+Conference Organization App: Using Google App Engine's Endpoints API, I built the Python backend to support a web and Android based conference organization application 
+
+Terry, welcome to Intro to Backend!
+
+Here's what you'll be learning:
+Learn to build a multiuser blog with Google App Engine that permits users to sign in
+
+Learn how to create server-side, data-driven web applications that support any front-end and can scale to support hundreds of thousands of users.

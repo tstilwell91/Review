@@ -1,0 +1,36 @@
+Once you have a team, you need to better organize and unclutter code.  Each office has own workflow. Define an organized workflow before. 
+
+Gitflow 
+wrote down all typical uses
+central part of the system: Github. In the middle, origin.  Could be own git server. Where you and team members coordinate.  Where you post commits and where final version of the code is hosted. 
+
+Outside of the central hub/origin, you have portions of project split up between people.  Assuming you are working on video viewer part of the project, git branch videoViewer 
+
+Now there is master branch. origin. And video branch.  Changes made on video branch and can push to master.  Other collaborators can see it but don't have to pull it. 
+
+Origin is where everyone is eventually pushing and pulling from. Teams/peers create their own branches. 
+
+When you have too many branches, it can get cluttered. Assuming video branch is brought into the master branch, the video branch should be deleted. 
+
+You could also take advantage of git's distributed version control function.  Instead of one master branch, I could push to my buddies before we push to origin where everyone can see. Just work with each other.  Add a remote to your repository. Does have tradeoff. Less visibility.  Most only have one master.  Could be in hierarchy.  
+
+Organizing git branches 
+Ideally, we want two master branches.  One with strictly production code.  
+Master -> Version 0.1 -> Version 0.2 -> 
+Fully functional pieces of software in master. Version numbers which are git tags. Giving a name to a commit. Instead of using commit long ID. 
+
+The other branch is where we do all of our work. Develop branch. Run in parallel to master.  
+Includes all hard work and when ready, push and merge into master. 
+Developing check outs devel branch on local machine, pushing to devel branch. Works in progress.  lots of collaboration.  may not be finished.  then finish for release cycle, then merge with master.  devel has lots of commits. master is for release candidates. 
+
+
+Might also be supporting branches.  Staging, hotfix branch.  What about bugs? 0.1 is finished but bug? how to fix it without messing with big devel branch? -> hotfix branch. step between devel and master. then push to master and devel. don't have to pull in all changes since. work from previous master release. 
+
+Features
+Local to just you or your homies through your own remote or your homie is made your remote.  Work on smaller features.  Before you push into main devel for everyone to see.  Might just be scrapped/busted and at least it isn't in the devel code that may be pushed to master.  You want feature all at once pushed to devel.  Not small. 
+
+Remember there is a layer of separation between features and master branch. Maintain quality of product. 
+
+---
+git clone vs git pull. both pull software from a remote repo. clone is how you get repo in your computer in the first place.  first day on teh job. 
+git pull: how you fetch the changes from a remote repo to the exisiting repo on your computer. if someone makes changes to remote branch, you can get those in your local branch 

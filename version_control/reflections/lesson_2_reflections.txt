@@ -1,0 +1,40 @@
+What happens when you initialize a repository? Why do you need to do it?
+  When you initialize a a repository, it creates a .git directory in your cwd.  Setups a git repository. 
+  Why? Otherwise, you don't have a git repository.  You need to create the .git folder/medtadata.  
+
+How is the staging area different from the working directory and the repository? What value do you think it offers?  
+  Workflow goes working directory -> Staging area -> commit in the repo. 
+  The working directory is just that. Contains files in your directory.  May or may not be in the repository.  Just chillin. 
+  When you want to add file or files into the repo, you must add them to the staging area first. 
+  Once the files are staged, you can then commit some or all of them to the repository. 
+  The value: allows you to make changes before making commit. Delete and remove them from staging area. 
+  Instead of going from working directory to repo, it allows you to see what you're doing.  Instead of one big ass command. Maybe complicated. 
+  
+How can you use the staging area to make sure you have one commit per logical change?
+  That's essentially what you're doing.  You decide what constitutes a logical change.  Then you add files to the staging area to reflect that change. 
+  Once you have everything to reflect that logical change, you commit.  You may decide to have one file per logical change or many.  Remember each commit 
+  takes a snapshot of all the files in the repository.   
+  
+What are some situations when branches would be helpful in keeping your history organized? How would branches help?
+  It's all about organization.  Assuming you have a working, master commit that is stable.  You then want to have an experiemental branch to work on, 
+  without affecting the master commit. Create a new commit with a new label, called a branch.  Now you have a copy of the master repository and you are 
+  free to make changes without affecting it.  You can easily switch your workspace between the branches using branch checkout. 
+  
+  Development, pre production, language vs native, features 
+  
+  Instead of working in a linear fashion, you can branch.  Checking out in linear fashion can be done but troublesome.  Lots of overhead to remember IDs so use labels or branches.
+  Let's say you have dev and master branch.  If you find bug and fix in master, dev is still separate with own list of commits.  To combine feature that is ready with previous 
+  branch point that now has moved on with bug fix, you can merge the branches. 
+  
+How do the diagrams help you visualize the branch structure?
+  When you see the diagram, you understand the parent<-commit relationship.  You can also see which commits are reachable from certain branches.  
+  Definitely shows you the history 
+  
+What is the result of merging two branches together? Why do we represent it in the diagram the way we do?
+  The result is  a commit that combines the commits of the two branches.  The branch that is currently checked out will automatically move its label to the new commit. 
+  It is represented the way we do because it is easier to see that the old branch's commits and current commits are still reachable.  Although, the commits will be stored in the log in creation time order so this graph may not be obvious. 
+
+What are the pros and cons of Git’s automatic merging vs. always doing merges manually?
+  Automatic merging is great when it works. 
+  When it doesn't, you do have to look at the code.  Make a decision.  Other commits might be involved from another person.  Resolving those merges manually can take some extra time but this is a good thing. 
+  

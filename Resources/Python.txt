@@ -1,0 +1,9 @@
+iPython is an interactive way to use python with enhanced functionality 
+Great for debugging code or iterating through python code
+pdb used in iPython to get functionality plus debugging
+magic methods: ? (get info on module, function, etc). _ (previous return). %pdb (enabled pdb whenever it encounters an error) 
+
+options: python, ipython, sublime, anaconda 
+pdb. setting breakpoint where you want the program to stop so you can take a look 
+an option is args which will give you arguments at current point 
+pp: pretty printing. make it more readable; function available to all data structures in python 

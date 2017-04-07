@@ -1,0 +1,219 @@
+Lesson 1 Notes 
+---------------
+Git is great because you can track changes of multiple files into one commit. This usually happens when you have a file dependency on another.  
+Git tracks multiple files into a repository.  Collection of files: repository
+When you make a commit, you save all files in your repo.
+If you have one file, git saves a version of the file each commit. 
+If you have more than one, git will also track all files in commit. 
+Commit: snapshot of your repository 
+
+git log --stat: to see files affected in the commit 
+git diff works also for multiple files that were changed in the commit 
+  I think what I meant was that git diff will show multiple files in the commit if multiple files were commited 
+Getting Practice
+Once you have git installed, you need a repository to work with.  Clone it.  Cloning is generally first step. 
+Git clone will take entire repository, which includes all commits and history.  Contrast that with downloading just the files from the latest stable commit. 
+
+Commands:
+git log
+git log --stat
+git diff 
+git checkout
+
+Concept map relationships: type-of, part-of, operates-on 
+HEAD is what git calls the commit you are actually on.  You can detach the head by going to a previous commit. 
+  Not exactly.  Detaching the head means going to a previous commit that is not a branch. (a commit with a label)
+
+git checkout: temporarily change files back to how they were in previous commit. think of it as restoring a previous version 
+  you checkout an entire commit. so all files are restored to previous version of that commit. 
+  why? bug was introduced but you aren't sure which. 
+  you can git checkout origin to go back to original or point HEAD back to latest commit.  checkout commits and check for bugs to troubleshoot. 
+  
+Lesson 2 Notes
+--------------
+Git repositories store metadata about the repo since creation. Metadata found in the main directory, but hidden. 
+.git directory.  Created when you cloned, which pulls history from repo.  
+git init. initializes a git repository.  creates the .git directory.  contrasts with clone. clone copied repo. init creates one. 
+Remember, a commit is a snapshot of a repository.  When init a repository, git doesn't create a commit. You may not want to commit everything in the directory. Do it yourself. Run git log to check commits. 
+
+Commands: 
+git init 
+git status  
+git reset: remove all files from the staging area 
+git diff 
+git diff ID1 ID2
+git diff --staged 
+git reset --hard: resets all files in working directory and staging area 
+  Be careful.  Git reset just removes files from staging area.  --hard will remove all modifications to files.  Discards all changes in working area and staging area.  Essentially, you go back to the commited version. 
+
+Git has a staging area.  Think of it as working directory-> Add files to staging area -> Repository 
+When your staging area is ready (could be more than one file), git will add the staging area into a commit to the repository. 
+Running git status after adding files to staging area, you will see "Changes to be commited"
+Remember to commit logical changes.  With two reflections files, may make more sense to commit each one individulaly. 
+
+Relationship diagram: when operates-on is an option, think of the verb used between X and Y. when you initializes a repo, it creates a repo. 
+
+Next topic is commit. 
+Style and standard practice for commits. 
+Write your commit messages as it was a command. Verbage tense
+
+Working directory clean means that all files have been committed. Nothing new. 
+
+Working dir-> Staging Area -> Repository
+Remember the repo has a commit, which contains copies of the files.  At any particular commit, let's say the most recent or HEAD, you also have a copy of the files form the commit in the staging area.  So when you make a change to the working directory/file, you can run git diff to compare changes to file in staging area that was pulled from latest commit. Git diff (without IDs of commits) will show you changes you haven't added to the staging area yet. 
+You can also run git diff between working directory and the staging area.  To compare differences in files. 
+Show changes that you haven' added to the staging area yet. 
+If file has been added to staging area, then the file is the same in the working directory and the staging area.  
+
+Likewise, you may want to compare files from the staged area and the repository 
+git diff --staged 
+
+Updates to files: represented as *
+Added files to staging area: +
+
+Remember git diff compares all files in working directory and staging area. 
+Use git diff to compare: working directory and staging area, staging area and commit in repository, or two commits in repo
+
+Commit messages has style guides.  Example
+----
+Type: Short summary/subject 50 chars or less without period
+
+Body (0ptional) wrapping at 72 chars
+
+Footer (Optional) mentioning bug fix version numbers 
+----
+
+So far, we have a very basic repository with a linear commit history.  However, we may want to branch out of that.  
+Linear/straight commit history is great for fixing bugs, changing documentation, adding new features.  
+What about trying out an experimental feature but you still want to have a working demo? Or what about an Italian version but leaving native version intact?
+You could just commit changes in linear fashion, taking note of IDs, and just checkout the previous version? But what if we found a bug in the original version?
+Branches: create labels for commits; In this example, we have 3 branches
+  Master: main branch. this is created for you when you init a repo 
+  Italian
+  Experiemental 
+Git warning about detached HEAD when checking out old commit.  Meaning you were pointing to a commit without a branch name.  So far we have been in detached state or master branch. 
+You can also checkout branch names.  Remember, branches are just labels for commits. And you checkout commits. 
+If you checkout branch, make a commit, the branch label moves automatically to the latest commit.  The branch stays checked out so you check it out again.  
+Terminology: Current last commit on a branch: This is called the tip of the branch. 
+May have multiple branch labels attached to a single commit. But! making a new commit will only update the branch that you have checked out and leave others alone.
+What if we wanted to merge two branches?  Let's say we want dev branch into production but master branch as moved on since diverged? 
+  Merging: process of combining two commits 
+  
+Exercise: Use the game from before but make it easier.  This time, we will create a branch. 
+  Breakup big pieces into 2 instead of 3.  -> easy mode branch
+  git branch easy_mode
+  git checkout easy_mode
+  make change to file. git add file. git commit. 
+  checkout both branches and see differences from game
+  
+Command: git branch 
+         git branch new_branch_name
+		 
+Interview notes: Create a new branch when moving on.  Whenever you're doing something different. Context switching.  Switching for a feature. Fixing  a bug. 
+Collaboration is difficult without branching.  New branch for every feature or bug fix. 
+
+Now we checkout a remote branch called coins.  You can see how we had the master and coins was created. but I created easy_mode after the coins branch.  So to look at the differences between branches
+  git checkout coins //remote message 
+  git log --oneline --graph master coins 
+
+How does git log know which commits to show you?
+  Each commit knows about its parent. It stores a reference to the commit that was checked out when it is made. 
+  If you were on a branch, you store the parent as the tip of the same branch. 
+  Commit doesn't care about branch names. 
+  Only branches store something about the position of the branches 
+  
+  Git log starts with most recent commit or tip of the branch specified.  Keeps following the parents until it finds a commit without a parent -> init 
+    Introduces reachability.  commit from one branch may never reach the commit of another branch because git log will follow parent. 
+	  If you checkout old commit, commit again, then checkout existing branch, that new commit would be lost unless you had the ID of the commit because it isn't reacheable by the other branches. parent relationship 
+	    So you can lose commits as being unreachable is you checkout previous commits, make commit, and not create a branch. 
+		Idea of detached head state means that you have checkedout old commit, made commit without a branch label.  To save changes, create a branch.  Otherwise, you'll lose the old commit. 
+		  These changes will not show up in git log from a branch because the commit isn't part of any branch. It isn't reachable by any branch. 
+		    To save, you can "git branch new_branch_name" followed by "git checkout new_branch_name"
+			  Or you could use one command "git checkout -b new_branch_name" but either commands must be done on the commit before you checkout somewhere else. 
+		Remember, HEAD points to the current commit. Think of * (star) in diagrams 
+
+Now let's discuss combining changes from multiple branches into one version. Merging 
+  What about modifying the same file?
+	Start with lines that are the same in both.  Then, you aren't sure. Some might be deleted from one on purpose or added one that isn't in the other.  You need context! Luckily, git does this for you. 
+  Merging style 
+  Merging two branches together. Combined version of coins and master. If you only had the tails of each branch, git wouldn't know how to merge them. Similar to unknown above. 
+    So you also use information from the commit that both diverged from.  Analogy to example is files that A and B both had at the beginning of the day. 
+  Once you have tips and reference commit (before divergence), git will create a new commit combining the two.  Merge 
+    The merged commit will have two parents now.  To both tips of master and coins branch 
+	Since the goal is to move the coins feature into the master branch, the new commit will be the tip of the master branch.  Master is the one getting updated. 
+	  Merging coins into master.  Like creating a new commit with all changes from coins branch. 
+	After the merge, you won't need the easy reference or branch label for coins anymore.  We can reach it through the master.  We can delete the coins brach or the label.  Commits are there still as long as  you merged first. 
+	Since you merge two branches, you might wonder about order in git log?  Sorted by time they were created. Might be shown as interleaved which is okay.
+	  This may introduce issues with git log.  If interleaved, you can't take 2 commits and assume one is the parent of the other.  If not, there may be many diffs
+	    Use git show ID which will show difference between parent wihtout knowing ID of parent
+  To delete a branch, run "git branch -d coins"
+  When merging, you need to checkout the branch you want to keep.  And then merge the other into the checked out one. 
+    git checkout 1
+	git merge 2  or git merge 1 2
+	  Doesn't matter the order since they will be combined and listed in order of time creation.  But the label checked out will remain. 
+  When you merge, it will merge the branch that is currently checked out so be careful.  If you checked out 1 and then merge 2 and 3, you will merge 1 2 and 3. 
+  Let's now add the coins addition (which is now in master branch) to the easy_mode branch.  So you will want to checkout easy_mode and merge the commits from master to it.  
+    There is a conflict on game.js. Both master and easy_mode changed same part in file.  Can't automatically resolve differences.  You must do it!
+	  To easily find conflicts in file, you can search for <<<< signs. 
+	  You will see three sections. HEAD, common, and master. Look at differences, clean it up and save the file. 
+
+Lesson 3 Notes: Github 
+-----------------------
+Commands 
+  git remote //view remote repos 
+  
+
+Website that makes it easy to share repositories 
+Anyone can contribute changes but they must be accepted by the people maintaining the code. 
+
+You have a local repository and a remote/github repository.  You will want to choose when to push to github because it will be public.  Doesn't happen automatically 
+How to interact with github? 
+  When interacting with github, information that is sent and received is in form of commit 
+  git clone is a pull. from github to local 
+    Cloning to Github is not allowed. First create an empty repository on github.  github called remotes 
+	  Interact with remotes by pushing and pulling commits/data 
+	    More common is sending and receiving (or pushing and pulling) by specifying a branch 
+		Pushing branch includes all commits in the branch.  If the commit already resided on the github remote, then you wouldn't resend it. Inefficient 
+		  Remember that communication between repositories compares commit history. No need to show staging area or working directory with example comparing local and remote push/pull
+		  
+Now we create a remote repository on github. 
+  Since we already have initialized our own repo with its own set of commits, don't click the README/init check box.
+    But this would be a good idea if starting out.  You can't clone a repo without any commits so if you want to init on github, click the box   
+  Next step is adding the new github repo as a remote on the local reflections repo on my computer 
+    git remote add origin URL
+	  By default, the origin remote branch is standard name.  The repository is called reflections on github but the remote branch on local machine is origin 
+	    git remote -v to get verbose output.  This will show you two places. One where you fetch and the other where to push.  Usually the same
+  Now to push changes, type
+    git push origin master   
+      where origin is the name of the local remote and master is the branch you want to send 
+      1. remote that I want to send changes to and 2. name of local branch to push 	  
+  Before pushing, master branch had all commits. Remote was empty.  After push, remote has all commits reachable from master or hte master branch.
+  By default, the branch name pushed will have the same name on github 
+  
+    Origin vs remote vs reflections vs repo vs master?
+	  origin is the name of the remote branch that I named on my local machine. This doesn't show up on github.  To interact with github, I must create remote and call it something. In this case, origin
+	  remote is a repository that contains branches and commits 
+	    remote in your local repo is a reference to another repo
+	  reflections was the name of the repository that you created on github 
+	  master is the name of the main branch on your local machine.  by default, when pushing, the name of the branch pushing is what name of hte branch shows up in github
+Next exercise is making changes to the repository on github that aren't in the local repository. 
+  This can happen is you push from another computer. Or another person is working on the repostiroy 
+  When creating a new file on github, you can enter commit message on the bottom of the page.   
+    So now Github has updated repository. To get the new changes, you have to pull master from github to local version. 
+    Syntax is just like git push.  first parameter is specifying the remote, named origin. also specify the branch I want to pull. 	
+	  git pull remote_repos branch_name
+	  this procedure pulls all commits reachable from master branch on github to master branch on local repos 
+	    git pull origin master
+		git log to see lastest commit 
+When you clone, a remote repo gets setup for you automatically.  You're cloning from a remote 
+
+New concept call forking.  Let's take the recipe idea.  Larry has recipe repo on github.  I could clone it and auto get origin remote pointint to Larry. Then I create a repo on github and have it as a new remote that I want to modify. 
+  Then someone else collborating with me could clone mine.  Nobody knows about Larry. What if we could do less work and still give Larry credit?
+  Forking 
+  Make a copy of github repo directly on the github server. Without pulling code directly down to local machine first. 
+  Fork is just a clone that github does for you on their machines. 
+  
+Branches happen on a single repository.  You can push and pull branches but when you create one, you do so on a single repo 
+You can clone locally or from a remote. 
+
+	

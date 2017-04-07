@@ -1,0 +1,4 @@
+Why might you want to always pull changes manually rather than having Git automatically stay up-to-date with your remote repository?
+  If you pull, you specify that you want to pull a specific branch for a remote repository.  If there are no differences between the local and remote repo, then you're fine. 
+  However, if they are different, this could lead to inconsistencies.  You may not want to pull.  Let's also consider collaboration.  If someone else is pushing, you may be working on a feature that could be affected. 
+  
