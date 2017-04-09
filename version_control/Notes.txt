@@ -209,11 +209,51 @@ When you clone, a remote repo gets setup for you automatically.  You're cloning 
 
 New concept call forking.  Let's take the recipe idea.  Larry has recipe repo on github.  I could clone it and auto get origin remote pointint to Larry. Then I create a repo on github and have it as a new remote that I want to modify. 
   Then someone else collborating with me could clone mine.  Nobody knows about Larry. What if we could do less work and still give Larry credit?
-  Forking 
+  Forking: The repository will be called your fork
   Make a copy of github repo directly on the github server. Without pulling code directly down to local machine first. 
   Fork is just a clone that github does for you on their machines. 
   
-Branches happen on a single repository.  You can push and pull branches but when you create one, you do so on a single repo 
 You can clone locally or from a remote. 
 
-	
+To allow someone to push to your remote repo on github, you can enable/add a collaborator. 
+
+Just like how you can have conflicts in commits, you can also have conflicting repositories.  This happens when you push or pull when the same branch is out of sync on both. 
+
+When you merge local and remote repositories...
+  When you have a remote setup, git stores local copies of all remote branches.  Contains the state of the remote from the last time you pushed or pulled. 
+  The local repo has a master branch and also a remote/origin master branch.  The may point to the same commit. In some cases, they may diverge.  Let's assume the remote was updated. 
+  But you don't want to merge them because of conflicts or another reason.  You can fetch the change instead, which will not merge. So you have two commits. One with master. 
+  And one with origin/master. After this, you may want to decide to merge them locally. 
+    This is actually what happens when you git pull
+      git pull origin master = git fetch origin, git merge master origin/master
+  Assume you have local: commit1=origin/master and master.  Same on remote.  Then you add a commit locally.  master moves forward but origin/master and remote master don't move. If you 
+  push, then both labels move forward. 
+    Same scenario for pull if you made additional commit on remote and then pulled locally.  Local master would then move forward
+git status will compare your local origin/master to master branch.  Not the remote repository
+  git status and git log run without internet access? Why? because of the local copy of your origin/master  
+When resolving conflicting merging, edit the file.  Then to let git know you resolved it, don't merge again. Add the file to the staging area and the commit. 
+
+Fast-forward commits
+  Happens when you merge and one branch is an ancestor of another. (where one commit is reachable by another)
+    There's no reason to create a new commit for the merge.  The younger commit already knows information about the parent.  So it makes sense to just move the label. 
+    take a label in the history of a branch and moving forward to tip of branch
+    If you want to merge b into a and knwo if it will be fast-forward merge, ask if you can reach a from b
+      The alternative, as in the git pull or git fecth/merge... you have a merge commit
+
+Git command: workflow you can use for feedback on your changes before you update the master branch.
+  Let's assume your fork and local repo are up to date.  I make a change locally on a new branch.  Push the new branch to the remote fork.  This way, the change isn't in the master branch yet
+Pull Request
+  Basically a way to ask collaborators that you want them to merge a branch that you made with the master. The pull request will show the commits that were made, files affected. 
+  Leaves an opportunity for collaborators to leave a message or comment. 
+  When the collaborators are ready to merge pull request, they will have a button that allows them to.  This is only possible if no confilcts exist. 
+    If the initiator of the pull request decides to make a change, the changes/commits will show up in the pull request automatically. 
+
+When merging on github, you do not have fast forward merges.  Always a merge commit 
+  Cannot resolve conflicting merges in github.  You must pull changes locally. However, you want to communicate with collabs with pull requests so you don't want to just merge and push 
+  since they can't see the history in the pull requests.  You only make changes to master using pull requests.  
+
+Rather than simply pulling and pushing, you need to pull changes into your local master branch, merge the local master into your branch (different-oil, in our case), then push your branch to the remote before finally merging your branch into master, either locally or on GitHub.
+
+Note: You could make your changes directly to the master branch in your fork, but when contributing to a public repository, it’s standard practice to make the changes in a non-master branch within the fork. This way, you can easily keep your master branch up-to-date with master of the original repository, and merge changes from master into your branch when you are ready.
+
+There might be a time where you have conflicting merges when working on github.  You have to resolve them locally.  In some cases, master will be updated further than your origin/master.  But you can't update your fork on github.  So you need to create a new remote that points to the source that you forked from.  This remote is called upstream.  Merge upstream branch with your local branch.  Then resolve conflictions.  Push and check if pull request changed
